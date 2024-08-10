@@ -144,22 +144,16 @@ int findDepartmentIndex(const vector<Department>& departments, const string& nam
     return -1;
 }
 
-void inOrder(AVLTreeNode* node) 
-{
+void inOrder(AVLTreeNode* node) {
     if (node != nullptr) {
         inOrder(node->left);
-        cout << "ID: " << node->employee->id << ", Name: " << node->employee->name
-             << ", Salary: " << node->employee->salary << ", Phone: " << node->employee->phone
-             << ", Department: " << node->employee->department << endl;
+        cout << left << setw(15) << node->employee->department << setw(10) << node->employee->id 
+             << setw(15) << node->employee->name << setw(10) << node->employee->salary 
+             << setw(15) << node->employee->phone << endl;
         inOrder(node->right);
     }
 }
 
-void displayDepartment(const Department &dept) 
-{
-    cout << "Department: " << dept.name << endl;
-    inOrder(dept.employeeTree.root);
-}
 
 void addDepartment(vector<Department> &departments, const string& name) 
 {
@@ -193,11 +187,13 @@ void deleteDepartment(vector<Department> &departments, const string& name)
     }
 }
 
-void displayAllDepartments(const vector<Department> &departments) 
-{
+void displayAllDepartments(const vector<Department> &departments) {
+    cout << left << setw(15) << "Department" << setw(10) << "ID" 
+             << setw(15) << "Name" << setw(10) << "Salary" 
+             << setw(15) << "Phone Number" << endl;
+    cout << "==============================================================" << endl;
     for (const auto &dept : departments) {
-        displayDepartment(dept);
-        cout << endl;
+        inOrder(dept.employeeTree.root);
     }
 }
 
@@ -288,7 +284,7 @@ void displayAllEmployeesInDepartment(const vector<Department> &departments, cons
 {
     int index = findDepartmentIndex(departments, departmentName);
     if (index != -1) {
-        displayDepartment(departments[index]);
+        inOrder(departments[index].employeeTree.root);
     } else {
         cout << "Department not found!" << endl;
     }
@@ -325,21 +321,6 @@ void editEmployeeInDepartment(vector<Department> &departments, const string& dep
         }
     } else {
         cout << "Department not found!" << endl;
-    }
-}
-
-void readDepartmentFile(vector<Department> &departments)
-{
-    ifstream fin("department.csv");
-    if(!fin)
-    {
-        cout << "Khong mo duoc file";
-        return; 
-    }
-    string s = "";
-    while(fin >> s)
-    {
-        addDepartment(departments, s);
     }
 }
 
@@ -506,8 +487,14 @@ void handleAddEmployee(vector<Department> &departments)
             throw invalid_argument("Department is empty!");
         }
 
-        addEmployeeToDepartment(departments, emp->department, emp);
-        cout << "Employee Added Successfully!" << endl; 
+
+        if(findDepartmentIndex(departments, emp->department) != -1)
+        {
+            addEmployeeToDepartment(departments, emp->department, emp);
+            cout << "Them nhan vien thanh cong!" << endl; 
+        }
+        else
+            cout << "Department not found!";
     }
     catch(const std::exception& e)
     {
