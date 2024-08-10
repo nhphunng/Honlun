@@ -597,7 +597,8 @@ void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments
     displayAllEmployeesInDepartment(departments, department);
 }
 
-void continue(){
+void Continue(int &choice)
+{
         int cont;
         cout << "Continue [1/0]: ";
         cin >> cont;
@@ -608,6 +609,7 @@ void continue(){
         }
         if (cont == 0) {
             cout << "Exiting the program.";
+            choice = 0;
             return;
         }
         else 
@@ -626,35 +628,35 @@ int main() {
         switch (choice) {
             case 1:
                 handleAddDepartment(departments);
-                continue();
+                Continue(choice);
                 break;
             case 2:
                 handleEditDepartment(departments);
-                continue();
+                Continue(choice);
                 break;
             case 3:
                 handleDeleteDepartment(departments);
-                continue();
+                Continue(choice);
                 break;
             case 4:
                 handleDisplayAllDepartments(departments);
-                continue();
+                Continue(choice);
                 break;
             case 5:
                 handleAddEmployee(departments);
-                continue();
+                Continue(choice);
                 break;
             case 6:
                 handleEditEmployee(departments);
-                continue();
+                Continue(choice);
                 break;
             case 7:
                 handleDeleteEmployee(departments);
-                continue();
+                Continue(choice);
                 break;
             case 8:
                 handleDisplayAllEmployeesInDepartment(departments);
-                continue();
+                Continue(choice);
                 break;
             case 0:
                 cout << "Exiting the program." << endl;
