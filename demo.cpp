@@ -351,7 +351,7 @@ void writeData(vector<Department> departments)
     ofstream fout("employee.csv");
     if(!fout)
     {
-        cout << "Khong mo hoac tao duoc file";
+        cout << "Can not open or create file" << endl;
         return; 
     }
     fout.clear();
@@ -368,7 +368,7 @@ void readData(vector<Department> &departments)
     ifstream fin("employee.csv");
     if(!fin)
     {
-        cout << "Khong mo duoc file";
+        cout << "Can not open file" << endl;
         return; 
     }
     string s; 
@@ -403,8 +403,16 @@ void displayMenu()
     cout << "6. Edit employee information" << endl;
     cout << "7. Delete employee" << endl;
     cout << "8. Display all employees in the department" << endl;
+    cout << "1. Add Department" << endl;
+    cout << "2. Edit Department" << endl;
+    cout << "3. Delete Department" << endl;
+    cout << "4. Show All Departments" << endl;
+    cout << "5. Add Employee" << endl;
+    cout << "6. Edit Employee Information" << endl;
+    cout << "7. Delete Employee" << endl;
+    cout << "8. Display All Employees In The Department" << endl;
     cout << "0. Exit" << endl;
-    cout << "Select options: ";
+    cout << "Select Options: ";
 }
 
 //Them phong ban 
