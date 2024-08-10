@@ -46,9 +46,7 @@ AVLTreeNode* createNode(Employee* emp)
     return node;
 }
 
-void clearScreen() {
-    cout << "\033[2J\033[1;1H"; 
-}
+
 
 int height(AVLTreeNode* node) 
 {
