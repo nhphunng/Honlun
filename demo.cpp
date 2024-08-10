@@ -351,7 +351,7 @@ void writeData(vector<Department> departments)
     ofstream fout("employee.csv");
     if(!fout)
     {
-        cout << "Khong mo hoac tao duoc file";
+        cout << "Can not open or create file" << endl;
         return; 
     }
     fout.clear();
@@ -368,7 +368,7 @@ void readData(vector<Department> &departments)
     ifstream fin("employee.csv");
     if(!fin)
     {
-        cout << "Khong mo duoc file";
+        cout << "Can not open file" << endl;
         return; 
     }
     string s; 
