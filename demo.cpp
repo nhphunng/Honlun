@@ -451,6 +451,14 @@ void handleDisplayAllDepartments(const vector<Department> &departments)
     displayAllDepartments(departments);
 }
 //Them nhan vien 
+bool checkID(long long id)
+{
+    for(long long a : ID)
+        if(a == id)
+            return true;
+    return false;
+}
+
 void handleAddEmployee(vector<Department> &departments) 
 {
     cout << "=== Add Employee ===\n";
