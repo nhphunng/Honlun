@@ -403,6 +403,7 @@ void displayMenu()
     cout << "6. Edit Employee Information" << endl;
     cout << "7. Delete Employee" << endl;
     cout << "8. Display All Employees In The Department" << endl;
+    cout << "9. Display Employee Informations Through ID" << endl;
     cout << "0. Exit" << endl;
     cout << "Select Options: ";
 }
@@ -410,6 +411,7 @@ void displayMenu()
 //Them phong ban 
 void handleAddDepartment(vector<Department> &departments) 
 {
+    cout << "=== Add Department ===\n";
     string name;
     cout << "Enter the department name: ";
     cin.ignore();
@@ -419,6 +421,7 @@ void handleAddDepartment(vector<Department> &departments)
 //Sua phong ban
 void handleEditDepartment(vector<Department> &departments) 
 {
+    cout << "=== Edit Department ===\n";
     string oldName, newName;
     cout << "Enter the current department name: ";
     cin.ignore();
@@ -430,6 +433,7 @@ void handleEditDepartment(vector<Department> &departments)
 //Xoa phong ban
 void handleDeleteDepartment(vector<Department> &departments) 
 {
+    cout << "=== Delete Department ===\n";
     string name;
     cout << "Enter the name of the department to delete: ";
     cin.ignore();
@@ -444,9 +448,9 @@ void handleDisplayAllDepartments(const vector<Department> &departments)
 //Them nhan vien 
 void handleAddEmployee(vector<Department> &departments) 
 {
-     try
+    cout << "=== Add Employee ===\n";
+    try
     {
-        /* code */
         Employee* emp = new Employee;
 
         cout << "Enter Employee ID: ";
@@ -510,6 +514,7 @@ void handleAddEmployee(vector<Department> &departments)
 //Sua thong tin nhan vien
 void handleEditEmployee(vector<Department> &departments) 
 {
+    cout << "=== Edit Employee ===\n";
      try
     {
 
@@ -573,6 +578,7 @@ void handleEditEmployee(vector<Department> &departments)
 
 void handleDeleteEmployee(vector<Department> &departments) 
 {
+    cout << "=== Delete Employee ===\n";
     int id;
     string department;
     
@@ -595,6 +601,58 @@ void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments
     getline(cin, department);
     
     displayAllEmployeesInDepartment(departments, department);
+}
+
+bool searchID(AVLTreeNode* node, long long id, Employee &empl) {
+    if (node == nullptr)
+        return false;
+
+    if (node->employee->id == id){
+        empl = *node->employee;
+        return true;    
+    }
+    else if (node->employee->id > id)
+        return searchID(node->left, id, empl);
+    else
+        return searchID(node->right, id, empl);
+}
+
+void handleFindEmployee(const vector<Department> &departments){
+    cout << "=== Find Employee ===\n";
+    int choice;
+    long long id;
+    cout << "Enter Employee ID: ";
+    cin >> id;
+    Employee empl;
+    bool found = false;
+    for (const auto &dept : departments) {
+        if (searchID(dept.employeeTree.root, id, empl)){
+            clearScreen();
+            cout << "======= Information =======\n";
+            cout << "ID: " << empl.id << endl;
+            cout << "Name: " << empl.name << endl;
+            cout << "Phone: " << empl.phone << endl;
+            cout << "Salary: " << empl.salary << endl;
+            cout << "Department: " << empl.department << endl;
+            cout << "===========================\n"; 
+            found = true;
+            break;  
+        }
+    }
+    if (!found){
+        cout << "This ID does not exist! Do you want to find again with another ID? [1/0]: ";
+        do {
+            cin >> choice;
+            if (choice == 1) {
+                clearScreen();
+                handleFindEmployee(departments);
+                break;
+            }
+            else if (choice != 0){
+                cout << "Invalid choice. Please enter 1 or 0: ";
+            }
+        } while (choice);
+    }
 }
 
 void Continue(int &choice)
@@ -624,7 +682,7 @@ int main() {
     do {
         displayMenu();
         cin >> choice;
-
+        clearScreen();
         switch (choice) {
             case 1:
                 handleAddDepartment(departments);
@@ -656,6 +714,10 @@ int main() {
                 break;
             case 8:
                 handleDisplayAllEmployeesInDepartment(departments);
+                Continue(choice);
+                break;
+            case 9:
+                handleFindEmployee(departments);
                 Continue(choice);
                 break;
             case 0:
