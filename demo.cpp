@@ -520,63 +520,63 @@ void handleAddEmployee(vector<Department> &departments)
 //Sua thong tin nhan vien
 void handleEditEmployee(vector<Department> &departments) 
 {
-    try
+     try
     {
 
         int id;
         string department, newName, newPhone;
         double newSalary;
         
-        cout << "Nhap ten phong ban: ";
+        cout << "Enter Department: ";
         cin.ignore();
         getline(cin, department);
         if(department.empty())
         {
-            throw invalid_argument("Ten phong ban khong duoc de trong!");
+            throw invalid_argument("Department name is empty!");
         }
 
-        cout << "Nhap ma nhan vien: ";
+        cout << "Enter Employee ID: ";
         cin >> id;
         if (cin.fail()) 
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Bo qua input sai 
-            throw invalid_argument("Ma nhan vien phai la so nguyen!");
+            throw invalid_argument("Employee ID must be an integer!");
         }
 
 
-        cout << "Nhap ten moi nhan vien: ";
+        cout << "Enter New Employee Name: ";
         cin.ignore();
         getline(cin, newName);
         if (newName.empty()) 
         {
-            throw invalid_argument("Ten nhan vien moi khong duoc de trong!");
+            throw invalid_argument("Employee Name is empty!");
         }
 
-        cout << "Nhap muc luong moi cua nhan vien: ";
+        cout << "Enter New Salary: ";
         cin >> newSalary;
         if (cin.fail() || newSalary < 0) 
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            throw invalid_argument("Luong phai la so thuc duong!");
+            throw invalid_argument("Salary must be a positive real number!");
         }
 
-        cout << "Nhap so dien thoai moi cua nhan vien: ";
+        cout << "Enter Employee Phone Number: ";
         cin.ignore();
         getline(cin, newPhone);
          if (newPhone.empty()) 
         {
-            throw invalid_argument("So dien thoai moi khong duoc de trong!");
+            throw invalid_argument("Phone number is empty!");
         }
 
         editEmployeeInDepartment(departments, department, id, newName, newSalary, newPhone);
-        cout << "Sua thong tin nhan vien thanh cong" << endl;
+        cout << "Employee Information Update Successfully" << endl;
     }
     catch (const invalid_argument &e)
     {
-        cout << "Loi: " << e.what() << endl;
-        cout << "Vui long nhap lai!" << endl;
+        cout << "Error: " << e.what() << endl;
+        cout << "Please re-enter!" << endl;
         handleEditEmployee(departments);
     }
 }
