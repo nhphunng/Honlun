@@ -403,7 +403,6 @@ void displayMenu()
     cout << "6. Edit employee information" << endl;
     cout << "7. Delete employee" << endl;
     cout << "8. Display all employees in the department" << endl;
-    cout << "9. Display employees by salary level in the department" << endl;
     cout << "0. Exit" << endl;
     cout << "Select options: ";
 }
@@ -577,10 +576,11 @@ void handleDeleteEmployee(vector<Department> &departments)
     int id;
     string department;
     
-    cout << "Nhập tên phòng ban: ";
+    cout << "Enter Department: ";
     cin.ignore();
     getline(cin, department);
-    cout << "Nhập mã nhân viên cần xóa: ";
+    
+    cout << "Enter Employee ID: ";
     cin >> id;
     
     deleteEmployee(departments, department, id);
@@ -589,20 +589,12 @@ void handleDeleteEmployee(vector<Department> &departments)
 void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments) 
 {
     string department;
-    cout << "Nhập tên phòng ban: ";
+    
+    cout << "Enter Department: ";
     cin.ignore();
     getline(cin, department);
+    
     displayAllEmployeesInDepartment(departments, department);
-}
-
-void handleDisplayEmployeesBySalaryInDepartment(const vector<Department> &departments) 
-{
-    string department;
-    cout << "Nhập tên phòng ban: ";
-    cin.ignore();
-    getline(cin, department);
-    cout << "Nhân viên được sắp xếp theo mức lương:" << endl;
-    // Implement function to display employees by increasing salary here
 }
 
 int main() {
@@ -638,9 +630,6 @@ int main() {
                 break;
             case 8:
                 handleDisplayAllEmployeesInDepartment(departments);
-                break;
-            case 9:
-                handleDisplayEmployeesBySalaryInDepartment(departments);
                 break;
             case 0:
                 cout << "Đang thoát chương trình." << endl;
