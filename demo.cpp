@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include <limits>
+#include <stdexcept>
 using namespace std;
 
 struct Employee 
