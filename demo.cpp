@@ -46,7 +46,9 @@ AVLTreeNode* createNode(Employee* emp)
     return node;
 }
 
-
+void clearScreen() {
+    cout << "\033[2J\033[1;1H"; 
+}
 
 int height(AVLTreeNode* node) 
 {
@@ -409,25 +411,25 @@ void readData(vector<Department> &departments)
 
 void displayMenu() 
 {
-    cout << "===== HỆ THỐNG QUẢN LÝ NHÂN VIÊN =====" << endl;
-    cout << "1. Thêm phòng ban" << endl;
-    cout << "2. Sửa phòng ban" << endl;
-    cout << "3. Xóa phòng ban" << endl;
-    cout << "4. Hiển thị tất cả phòng ban" << endl;
-    cout << "5. Thêm nhân viên" << endl;
-    cout << "6. Sửa thông tin nhân viên" << endl;
-    cout << "7. Xóa nhân viên" << endl;
-    cout << "8. Hiển thị tất cả nhân viên trong phòng ban" << endl;
-    cout << "9. Hiển thị nhân viên theo mức lương trong phòng ban" << endl;
-    cout << "0. Thoát" << endl;
-    cout << "Chọn tùy chọn: ";
+    cout << "===== EMPLOYEE MANAGEMENT SYSTEM =====" << endl;
+    cout << "1. Add department" << endl;
+    cout << "2. Edit department" << endl;
+    cout << "3. Delete department" << endl;
+    cout << "4. Show all departments" << endl;
+    cout << "5. Add employee" << endl;
+    cout << "6. Edit employee information" << endl;
+    cout << "7. Delete employee" << endl;
+    cout << "8. Display all employees in the department" << endl;
+    cout << "9. Display employees by salary level in the department" << endl;
+    cout << "0. Exit" << endl;
+    cout << "Select options: ";
 }
 
 //Them phong ban 
 void handleAddDepartment(vector<Department> &departments) 
 {
     string name;
-    cout << "Nhập tên phòng ban: ";
+    cout << "Enter the department name: ";
     cin.ignore();
     getline(cin, name);
     addDepartment(departments, name);
@@ -436,10 +438,10 @@ void handleAddDepartment(vector<Department> &departments)
 void handleEditDepartment(vector<Department> &departments) 
 {
     string oldName, newName;
-    cout << "Nhập tên phòng ban hiện tại: ";
+    cout << "Enter the current department name: ";
     cin.ignore();
     getline(cin, oldName);
-    cout << "Nhập tên phòng ban mới: ";
+    cout << "Enter the new department name: ";
     getline(cin, newName);
     editDepartment(departments, oldName, newName);
 }
@@ -447,7 +449,7 @@ void handleEditDepartment(vector<Department> &departments)
 void handleDeleteDepartment(vector<Department> &departments) 
 {
     string name;
-    cout << "Nhập tên phòng ban cần xóa: ";
+    cout << "Enter the name of the department to delete: ";
     cin.ignore();
     getline(cin, name);
     deleteDepartment(departments, name);
