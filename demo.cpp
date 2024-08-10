@@ -114,12 +114,14 @@ AVLTreeNode* insert(AVLTreeNode* node, Employee* emp)
     if (balance < -1 && emp->id > node->right->employee->id)
         return leftRotate(node);
 
-    if (balance > 1 && emp->id > node->left->employee->id) {
+    if (balance > 1 && emp->id > node->left->employee->id) 
+    {
         node->left = leftRotate(node->left);
         return rightRotate(node);
     }
 
-    if (balance < -1 && emp->id < node->right->employee->id) {
+    if (balance < -1 && emp->id < node->right->employee->id) 
+    {
         node->right = rightRotate(node->right);
         return leftRotate(node);
     }
@@ -132,21 +134,25 @@ void createAVLTree(AVLTree &tree)
     tree.root = nullptr;
 }
 
-void addEmployeeToAVLTree(AVLTree &tree, Employee* emp) {
+void addEmployeeToAVLTree(AVLTree &tree, Employee* emp) 
+{
     tree.root = insert(tree.root, emp);
 }
 
 int findDepartmentIndex(const vector<Department>& departments, const string& name) 
 {
-    for (size_t i = 0; i < departments.size(); i++) {
+    for (size_t i = 0; i < departments.size(); i++) 
+    {
         if (departments[i].name == name)
             return i;
     }
     return -1;
 }
 
-void inOrder(AVLTreeNode* node) {
-    if (node != nullptr) {
+void inOrder(AVLTreeNode* node) 
+{
+    if (node != nullptr) 
+    {
         inOrder(node->left);
         cout << left << setw(15) << node->employee->department << setw(10) << node->employee->id 
              << setw(15) << node->employee->name << setw(10) << node->employee->salary 
@@ -158,7 +164,8 @@ void inOrder(AVLTreeNode* node) {
 
 void addDepartment(vector<Department> &departments, const string& name) 
 {
-    if (findDepartmentIndex(departments, name) != -1) {
+    if (findDepartmentIndex(departments, name) != -1) 
+    {
         cout << "Department already exists!" << endl;
         return;
     }
@@ -171,9 +178,12 @@ void addDepartment(vector<Department> &departments, const string& name)
 void editDepartment(vector<Department> &departments, const string& oldName, const string& newName) 
 {
     int index = findDepartmentIndex(departments, oldName);
-    if (index != -1) {
+    if (index != -1) 
+    {
         departments[index].name = newName;
-    } else {
+    } 
+    else 
+    {
         cout << "Department not found!" << endl;
     }
 }
@@ -181,14 +191,17 @@ void editDepartment(vector<Department> &departments, const string& oldName, cons
 void deleteDepartment(vector<Department> &departments, const string& name) 
 {
     int index = findDepartmentIndex(departments, name);
-    if (index != -1) {
+    if (index != -1) 
+    {
         departments.erase(departments.begin() + index);
-    } else {
+    } else 
+    {
         cout << "Department not found!" << endl;
     }
 }
 
-void displayAllDepartments(const vector<Department> &departments) {
+void displayAllDepartments(const vector<Department> &departments) 
+{
     cout << left << setw(15) << "Department" << setw(10) << "ID" 
              << setw(15) << "Name" << setw(10) << "Salary" 
              << setw(15) << "Phone Number" << endl;
@@ -202,9 +215,11 @@ void displayAllDepartments(const vector<Department> &departments) {
 void addEmployeeToDepartment(vector<Department> &departments, const string& departmentName, Employee* emp) 
 {
     int index = findDepartmentIndex(departments, departmentName);
-    if (index != -1) {
+    if (index != -1) 
+    {
         addEmployeeToAVLTree(departments[index].employeeTree, emp);
-    } else {
+    } else 
+    {
         addDepartment(departments, departmentName);
         index = findDepartmentIndex(departments, departmentName);
         addEmployeeToAVLTree(departments[index].employeeTree, emp);
@@ -229,16 +244,20 @@ AVLTreeNode* deleteNode(AVLTreeNode* root, int id)
     else if (id > root->employee->id)
         root->right = deleteNode(root->right, id);
     else {
-        if ((root->left == nullptr) || (root->right == nullptr)) {
+        if ((root->left == nullptr) || (root->right == nullptr)) 
+        {
             AVLTreeNode* temp = root->left ? root->left : root->right;
 
-            if (temp == nullptr) {
+            if (temp == nullptr) 
+            {
                 temp = root;
                 root = nullptr;
             } else
                 *root = *temp;
             delete temp;
-        } else {
+        }
+        else 
+        {
             AVLTreeNode* temp = minValueNode(root->right);
             root->employee = temp->employee;
             root->right = deleteNode(root->right, temp->employee->id);
@@ -255,7 +274,8 @@ AVLTreeNode* deleteNode(AVLTreeNode* root, int id)
     if (balance > 1 && getBalance(root->left) >= 0)
         return rightRotate(root);
 
-    if (balance > 1 && getBalance(root->left) < 0) {
+    if (balance > 1 && getBalance(root->left) < 0) 
+    {
         root->left = leftRotate(root->left);
         return rightRotate(root);
     }
@@ -263,7 +283,8 @@ AVLTreeNode* deleteNode(AVLTreeNode* root, int id)
     if (balance < -1 && getBalance(root->right) <= 0)
         return leftRotate(root);
 
-    if (balance < -1 && getBalance(root->right) > 0) {
+    if (balance < -1 && getBalance(root->right) > 0) 
+    {
         root->right = rightRotate(root->right);
         return leftRotate(root);
     }
@@ -274,9 +295,11 @@ AVLTreeNode* deleteNode(AVLTreeNode* root, int id)
 void deleteEmployee(vector<Department> &departments, const string& departmentName, int empId) 
 {
     int index = findDepartmentIndex(departments, departmentName);
-    if (index != -1) {
+    if (index != -1) 
+    {
         departments[index].employeeTree.root = deleteNode(departments[index].employeeTree.root, empId);
-    } else {
+    } else 
+    {
         cout << "Department not found!" << endl;
     }
 }
@@ -284,9 +307,12 @@ void deleteEmployee(vector<Department> &departments, const string& departmentNam
 void displayAllEmployeesInDepartment(const vector<Department> &departments, const string& departmentName) 
 {
     int index = findDepartmentIndex(departments, departmentName);
-    if (index != -1) {
+    if (index != -1) 
+    {
         inOrder(departments[index].employeeTree.root);
-    } else {
+    } 
+    else 
+    {
         cout << "Department not found!" << endl;
     }
 }
@@ -312,15 +338,21 @@ AVLTreeNode* searchEmployee(AVLTreeNode* node, int empId)
 void editEmployeeInDepartment(vector<Department> &departments, const string& departmentName, int empId, const string& newName, double newSalary, const string& newPhone) 
 {
     int index = findDepartmentIndex(departments, departmentName);
-    if (index != -1) {
+    if (index != -1) 
+    {
         AVLTreeNode* empNode = searchEmployee(departments[index].employeeTree.root, empId);
-        if (empNode != nullptr) {
+        if (empNode != nullptr) 
+        {
             editEmployee(empNode->employee, newName, newSalary, newPhone);
             cout << "Employee information updated successfully!" << endl;
-        } else {
+        } 
+        else 
+        {
             cout << "Employee not found!" << endl;
         }
-    } else {
+    } 
+    else 
+    {
         cout << "Department not found!" << endl;
     }
 }
@@ -344,6 +376,7 @@ void writeTree(AVLTreeNode* root, ofstream &fout)
     }
 }
 
+//Ghi du lieu xuong file sau khi dong chuong trinh 
 void writeData(vector<Department> departments)
 {
     ofstream fout("employee.csv");
@@ -361,6 +394,7 @@ void writeData(vector<Department> departments)
     fout.close();
 }
 
+// Doc du lieu tu file khi mo chuong trinh
 void readData(vector<Department> &departments)
 {
     ifstream fin("employee.csv");
@@ -389,58 +423,106 @@ void readData(vector<Department> &departments)
     fin.close();
 }
 
-
+//Menu 
 void displayMenu() 
 {
-    cout << "===== HỆ THỐNG QUẢN LÝ NHÂN VIÊN =====" << endl;
-    cout << "1. Thêm phòng ban" << endl;
-    cout << "2. Sửa phòng ban" << endl;
-    cout << "3. Xóa phòng ban" << endl;
-    cout << "4. Hiển thị tất cả phòng ban" << endl;
-    cout << "5. Thêm nhân viên" << endl;
-    cout << "6. Sửa thông tin nhân viên" << endl;
-    cout << "7. Xóa nhân viên" << endl;
-    cout << "8. Hiển thị tất cả nhân viên trong phòng ban" << endl;
-    cout << "9. Hiển thị nhân viên theo mức lương trong phòng ban" << endl;
-    cout << "0. Thoát" << endl;
-    cout << "Chọn tùy chọn: ";
+    cout << "===== EMPLOYEE MANAGEMENT SYSTEM =====" << endl;
+    cout << "1. Add Department" << endl;
+    cout << "2. Update Department" << endl;
+    cout << "3. Delete Department" << endl;
+    cout << "4. Display All Employees" << endl;
+    cout << "5. Add Employee Information" << endl;
+    cout << "6. Update Employee Information" << endl;
+    cout << "7. Delete Employee" << endl;
+    cout << "8. Display Employees Of A Department" << endl;
+    cout << "0. Exit" << endl;
+    cout << "Please, Enter your choice: ";
 }
 
-//Them phong ban 
+//1 Them phong ban 
 void handleAddDepartment(vector<Department> &departments) 
 {
     string name;
-    cout << "Nhập tên phòng ban: ";
-    cin.ignore();
-    getline(cin, name);
-    addDepartment(departments, name);
+    try 
+    {
+        cout << "Enter the department name: ";
+        cin.ignore();
+        getline(cin, name);
+
+        if (name.empty()) 
+        {
+            throw invalid_argument("Department name cannot be empty!");
+        }
+
+        // Assuming addDepartment throws an exception if the department name already exists
+        addDepartment(departments, name);
+        cout << "Department added successfully!" << endl;
+    }
+    catch (const invalid_argument &e) 
+    {
+        cout << "Error: " << e.what() << endl;
+        cout << "Please re-enter!" << endl;
+        handleAddDepartment(departments);
+    }
 }
-//Sua phong ban
+//2 Sua phong ban
 void handleEditDepartment(vector<Department> &departments) 
 {
     string oldName, newName;
-    cout << "Nhập tên phòng ban hiện tại: ";
-    cin.ignore();
-    getline(cin, oldName);
-    cout << "Nhập tên phòng ban mới: ";
-    getline(cin, newName);
-    editDepartment(departments, oldName, newName);
+    try
+    {
+        /* code */
+        cout << "Enter Name Of Department To Edit: ";
+        cin.ignore();
+        getline(cin, oldName);
+        if(oldName.empty())
+        {
+            throw invalid_argument("Old name is empty!");
+        }
+        cout << "Enter New Department Name: ";
+        getline(cin, newName);
+        if(newName.empty())
+        {
+            throw invalid_argument("New name is empty!");
+        }
+        editDepartment(departments, oldName, newName);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        cout << "Please re-enter!" << endl; 
+        handleEditDepartment(departments);
+    }
 }
-//Xoa phong ban
+//3 Xoa phong ban
 void handleDeleteDepartment(vector<Department> &departments) 
 {
     string name;
-    cout << "Nhập tên phòng ban cần xóa: ";
-    cin.ignore();
-    getline(cin, name);
-    deleteDepartment(departments, name);
+    try
+    {
+        /* code */
+        cout << "Enter Deleted Department: ";
+        cin.ignore();
+        getline(cin, name);
+        if(name.empty())
+        {
+            throw invalid_argument("Deleted Deparment is empty!");
+        }
+        deleteDepartment(departments, name);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        cout << "Please re-enter!" << endl; 
+        handleDeleteDepartment(departments);
+    }
 }
-//Hien thi tat ca phong ban 
+//4 Hien thi tat ca phong ban 
 void handleDisplayAllDepartments(const vector<Department> &departments) 
 {
     displayAllDepartments(departments);
 }
-//Them nhan vien 
+//5 Them nhan vien 
 void handleAddEmployee(vector<Department> &departments) 
 {
      try
@@ -506,7 +588,7 @@ void handleAddEmployee(vector<Department> &departments)
     } 
 }
 
-//Sua thong tin nhan vien
+//6 Sua thong tin nhan vien
 void handleEditEmployee(vector<Department> &departments) 
 {
      try
@@ -569,7 +651,7 @@ void handleEditEmployee(vector<Department> &departments)
         handleEditEmployee(departments);
     }
 }
-
+//7 Xoa nhan vien 
 void handleDeleteEmployee(vector<Department> &departments) 
 {
     int id;
@@ -584,6 +666,7 @@ void handleDeleteEmployee(vector<Department> &departments)
     deleteEmployee(departments, department, id);
 }
 
+//8 Hien thi thong tin nhan vien cua mot phong ban 
 void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments) 
 {
     string department;
@@ -591,16 +674,6 @@ void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments
     cin.ignore();
     getline(cin, department);
     displayAllEmployeesInDepartment(departments, department);
-}
-
-void handleDisplayEmployeesBySalaryInDepartment(const vector<Department> &departments) 
-{
-    string department;
-    cout << "Nhập tên phòng ban: ";
-    cin.ignore();
-    getline(cin, department);
-    cout << "Nhân viên được sắp xếp theo mức lương:" << endl;
-    // Implement function to display employees by increasing salary here
 }
 
 int main() {
