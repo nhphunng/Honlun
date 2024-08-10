@@ -47,9 +47,8 @@ AVLTreeNode* createNode(Employee* emp)
     return node;
 }
 
-void clearScreen() {
-    cout << "\033[2J\033[1;1H"; 
-}
+vector<long long> ID;
+
 
 int height(AVLTreeNode* node) 
 {
@@ -134,7 +133,9 @@ void createAVLTree(AVLTree &tree)
     tree.root = nullptr;
 }
 
-void addEmployeeToAVLTree(AVLTree &tree, Employee* emp) {
+void addEmployeeToAVLTree(AVLTree &tree, Employee* emp) 
+{
+    ID.push_back(emp->id);
     tree.root = insert(tree.root, emp);
 }
 
@@ -456,6 +457,10 @@ void handleAddEmployee(vector<Department> &departments)
             cin.clear(); // Clear the error flag
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard the invalid input
             throw invalid_argument("Employee ID must be an integer!");
+        }
+        else if(checkID(emp->id))
+        {
+            throw invalid_argument("ID is available!");
         }
 
         cout << "Enter Employee Name: ";
