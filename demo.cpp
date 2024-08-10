@@ -6,6 +6,7 @@
 #include <sstream>
 #include <limits>
 #include <stdexcept>
+#include <iomanip>
 using namespace std;
 
 struct Employee 
@@ -284,7 +285,7 @@ void displayAllEmployeesInDepartment(const vector<Department> &departments, cons
 {
     int index = findDepartmentIndex(departments, departmentName);
     if (index != -1) {
-        inOrder(departments[index].employTree.root);
+        inOrder(departments[index].employeeTree.root);
     } else {
         cout << "Department not found!" << endl;
     }
