@@ -462,59 +462,59 @@ void handleDisplayAllDepartments(const vector<Department> &departments)
 //Them nhan vien 
 void handleAddEmployee(vector<Department> &departments) 
 {
-    try
+     try
     {
         /* code */
         Employee* emp = new Employee;
 
-        cout << "Nhập mã nhân viên: ";
+        cout << "Enter Employee ID: ";
         cin >> emp->id;
         if (cin.fail()) 
         {
             cin.clear(); // Clear the error flag
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard the invalid input
-            throw invalid_argument("Ma nhan vien phai la so nguyen!");
+            throw invalid_argument("Employee ID must be an integer!");
         }
 
-        cout << "Nhập tên nhân viên: ";
+        cout << "Enter Employee Name: ";
         cin.ignore();
         getline(cin, emp->name);
         if (emp->name.empty()) 
         {
-            throw invalid_argument("Ten nhan vien moi khong duoc de trong!");
+            throw invalid_argument("Employee Name is empty!");
         }
 
-        cout << "Nhập mức lương của nhân viên: ";
+        cout << "Enter Salary: ";
         cin >> emp->salary;
         if (cin.fail() || emp->salary < 0) 
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            throw invalid_argument("Luong phai la so thuc duong!");
+            throw invalid_argument("Salary must be a positive real number!");
         }
 
-        cout << "Nhập số điện thoại của nhân viên: ";
+        cout << "Enter Phone Number: ";
         cin.ignore();
         getline(cin, emp->phone);
         if (emp->phone.empty()) 
         {
-            throw invalid_argument("So dien thoai moi khong duoc de trong!");
+            throw invalid_argument("Phone number is empty!");
         }
 
-        cout  << "Nhập tên phòng ban: ";
+        cout  << "Enter Department: ";
         getline(cin, emp->department);
         if (emp->department.empty()) 
         {
-            throw invalid_argument("Ten phong ban khong duoc de trong!");
+            throw invalid_argument("Department is empty!");
         }
 
         addEmployeeToDepartment(departments, emp->department, emp);
-        cout << "Them nhan vien thanh cong!" << endl; 
+        cout << "Employee Added Successfully!" << endl; 
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
-        cout << "Vui long nhap lai!" << endl;
+        cout << "Please re-enter!" << endl;
         handleAddEmployee(departments);
     } 
 }
