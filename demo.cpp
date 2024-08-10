@@ -597,6 +597,23 @@ void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments
     displayAllEmployeesInDepartment(departments, department);
 }
 
+void continue(){
+        int cont;
+        cout << "Continue [1/0]: ";
+        cin >> cont;
+        while (cont != 0 && cont != 1){
+            cout << "Invalid selection. Please try again.\n";
+            cout << "Continue [1/0]: ";
+            cin >> cont;
+        }
+        if (cont == 0) {
+            cout << "Exiting the program.";
+            return;
+        }
+        else 
+            clearScreen();
+}
+
 int main() {
     vector<Department> departments;
     readData(departments);
@@ -609,27 +626,35 @@ int main() {
         switch (choice) {
             case 1:
                 handleAddDepartment(departments);
+                continue();
                 break;
             case 2:
                 handleEditDepartment(departments);
+                continue();
                 break;
             case 3:
                 handleDeleteDepartment(departments);
+                continue();
                 break;
             case 4:
                 handleDisplayAllDepartments(departments);
+                continue();
                 break;
             case 5:
                 handleAddEmployee(departments);
+                continue();
                 break;
             case 6:
                 handleEditEmployee(departments);
+                continue();
                 break;
             case 7:
                 handleDeleteEmployee(departments);
+                continue();
                 break;
             case 8:
                 handleDisplayAllEmployeesInDepartment(departments);
+                continue();
                 break;
             case 0:
                 cout << "Exiting the program." << endl;
@@ -638,20 +663,7 @@ int main() {
                 cout << "Invalid selection. Please try again." << endl;
         }
         cout << endl;
-        int cont;
-        cout << "Continue [1/0]: ";
-        cin >> cont;
-        while (cont != 0 && cont != 1){
-            cout << "Invalid selection. Please try again.\n";
-            cout << "Continue [1/0]: ";
-            cin >> cont;
-        }
-        if (cont == 0) {
-            cout << "Exiting the program.";
-            break;
-        }
-        else 
-            clearScreen();
+
 
     } while (choice != 0);
     writeData(departments);
