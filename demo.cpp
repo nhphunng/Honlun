@@ -395,16 +395,16 @@ void readData(vector<Department> &departments)
 void displayMenu() 
 {
     cout << "===== EMPLOYEE MANAGEMENT SYSTEM =====" << endl;
-    cout << "1. Add department" << endl;
-    cout << "2. Edit department" << endl;
-    cout << "3. Delete department" << endl;
-    cout << "4. Show all departments" << endl;
-    cout << "5. Add employee" << endl;
-    cout << "6. Edit employee information" << endl;
-    cout << "7. Delete employee" << endl;
-    cout << "8. Display all employees in the department" << endl;
+    cout << "1. Add Department" << endl;
+    cout << "2. Edit Department" << endl;
+    cout << "3. Delete Department" << endl;
+    cout << "4. Show All Departments" << endl;
+    cout << "5. Add Employee" << endl;
+    cout << "6. Edit Employee Information" << endl;
+    cout << "7. Delete Employee" << endl;
+    cout << "8. Display All Employees In The Department" << endl;
     cout << "0. Exit" << endl;
-    cout << "Select options: ";
+    cout << "Select Options: ";
 }
 
 //Them phong ban 
