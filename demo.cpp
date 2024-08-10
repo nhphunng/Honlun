@@ -45,10 +45,6 @@ AVLTreeNode* createNode(Employee* emp)
     return node;
 }
 
-void clearScreen() {
-    cout << "\033[2J\033[1;1H"; 
-}
-
 int height(AVLTreeNode* node) 
 {
     return node ? node->height : 0;
@@ -114,12 +110,14 @@ AVLTreeNode* insert(AVLTreeNode* node, Employee* emp)
     if (balance < -1 && emp->id > node->right->employee->id)
         return leftRotate(node);
 
-    if (balance > 1 && emp->id > node->left->employee->id) {
+    if (balance > 1 && emp->id > node->left->employee->id) 
+    {
         node->left = leftRotate(node->left);
         return rightRotate(node);
     }
 
-    if (balance < -1 && emp->id < node->right->employee->id) {
+    if (balance < -1 && emp->id < node->right->employee->id) 
+    {
         node->right = rightRotate(node->right);
         return leftRotate(node);
     }
@@ -132,13 +130,15 @@ void createAVLTree(AVLTree &tree)
     tree.root = nullptr;
 }
 
-void addEmployeeToAVLTree(AVLTree &tree, Employee* emp) {
+void addEmployeeToAVLTree(AVLTree &tree, Employee* emp) 
+{
     tree.root = insert(tree.root, emp);
 }
 
 int findDepartmentIndex(const vector<Department>& departments, const string& name) 
 {
-    for (size_t i = 0; i < departments.size(); i++) {
+    for (size_t i = 0; i < departments.size(); i++) 
+    {
         if (departments[i].name == name)
             return i;
     }
@@ -147,7 +147,8 @@ int findDepartmentIndex(const vector<Department>& departments, const string& nam
 
 void inOrder(AVLTreeNode* node) 
 {
-    if (node != nullptr) {
+    if (node != nullptr) 
+    {
         inOrder(node->left);
         cout << "ID: " << node->employee->id << ", Name: " << node->employee->name
              << ", Salary: " << node->employee->salary << ", Phone: " << node->employee->phone
