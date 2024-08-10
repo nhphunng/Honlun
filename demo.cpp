@@ -47,7 +47,9 @@ AVLTreeNode* createNode(Employee* emp)
     return node;
 }
 
-
+void clearScreen() {
+    cout << "\033[2J\033[1;1H"; 
+}
 
 int height(AVLTreeNode* node) 
 {
@@ -464,6 +466,7 @@ void handleAddDepartment(vector<Department> &departments)
         cout << "Please re-enter!" << endl;
         handleAddDepartment(departments);
     }
+
 }
 //2 Sua phong ban
 void handleEditDepartment(vector<Department> &departments) 
