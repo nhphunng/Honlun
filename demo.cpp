@@ -151,7 +151,7 @@ void inOrder(AVLTreeNode* node) {
     if (node != nullptr) {
         inOrder(node->left);
         cout << left << setw(15) << node->employee->department << setw(10) << node->employee->id 
-             << setw(15) << node->employee->name << setw(10) << node->employee->salary 
+             << setw(25) << node->employee->name << setw(10) << node->employee->salary 
              << setw(15) << node->employee->phone << endl;
         inOrder(node->right);
     }
@@ -192,9 +192,9 @@ void deleteDepartment(vector<Department> &departments, const string& name)
 
 void displayAllDepartments(const vector<Department> &departments) {
     cout << left << setw(15) << "Department" << setw(10) << "ID" 
-             << setw(15) << "Name" << setw(10) << "Salary" 
+             << setw(25) << "Name" << setw(10) << "Salary" 
              << setw(15) << "Phone Number" << endl;
-    cout << "==============================================================" << endl;
+    cout << "========================================================================" << endl;
     for (const auto &dept : departments) {
         inOrder(dept.employeeTree.root);
     }
@@ -398,7 +398,7 @@ void displayMenu()
     cout << "1. Add department" << endl;
     cout << "2. Edit department" << endl;
     cout << "3. Delete department" << endl;
-    cout << "4. Show all departments" << endl;
+    cout << "4. Display all employees" << endl;
     cout << "5. Add employee" << endl;
     cout << "6. Edit employee information" << endl;
     cout << "7. Delete employee" << endl;
