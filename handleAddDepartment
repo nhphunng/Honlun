@@ -1,0 +1,9 @@
+//1 Them phong ban 
+void handleAddDepartment(vector<Department> &departments) 
+{
+    string name;
+    cout << "Nhập tên phòng ban: ";
+    cin.ignore();
+    getline(cin, name);
+    addDepartment(departments, name);
+}
