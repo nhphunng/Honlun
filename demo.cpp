@@ -632,13 +632,26 @@ int main() {
                 handleDisplayAllEmployeesInDepartment(departments);
                 break;
             case 0:
-                cout << "Đang thoát chương trình." << endl;
+                cout << "Exiting the program." << endl;
                 break;
             default:
-                cout << "Lựa chọn không hợp lệ. Vui lòng thử lại." << endl;
+                cout << "Invalid selection. Please try again." << endl;
         }
-        
         cout << endl;
+        int cont;
+        cout << "Continue [1/0]: ";
+        cin >> cont;
+        while (cont != 0 && cont != 1){
+            cout << "Invalid selection. Please try again.\n";
+            cout << "Continue [1/0]: ";
+            cin >> cont;
+        }
+        if (cont == 0) {
+            cout << "Exiting the program.";
+            break;
+        }
+        else 
+            clearScreen();
 
     } while (choice != 0);
     writeData(departments);
