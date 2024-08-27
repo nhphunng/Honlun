@@ -425,6 +425,7 @@ void handleAddDepartment(vector<Department> &departments)
     cin.ignore();
     getline(cin, name);
     addDepartment(departments, name);
+    cout << "Add Department Successfully!\n";
 }
 //Sua phong ban
 void handleEditDepartment(vector<Department> &departments) 
@@ -605,11 +606,52 @@ void handleDeleteEmployee(vector<Department> &departments)
     cout << "Enter Department: ";
     cin.ignore();
     getline(cin, department);
-    
+
+    while(findDepartmentIndex(departments, department) == -1)
+    {
+        int choice;
+        cout << "Department not found. Do you want to find again with another department [1/0]: ";
+        cin >> choice;
+        while(cin.fail() || (choice != 0 && choice != 1)){
+            cout << "Invalid selection. Please try again [1/0]: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> choice;
+        }
+        if(choice == 1){
+            cout << "Enter Department: ";
+            cin.ignore();
+            getline(cin, department);
+        }
+        else
+            return;    
+    }
+    int index = findDepartmentIndex(departments, department);
+    Employee temp;
     cout << "Enter Employee ID: ";
     cin >> id;
-    
+    while (!searchID(departments[index].employeeTree.root, id, temp))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        int choice;
+        cout << "This ID does not exist. Do you want to find again with another ID [1/0]: ";
+        cin >> choice;
+        while(cin.fail() || (choice != 0 && choice != 1)){
+            cout << "Invalid selection. Please try again [1/0]: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> choice;
+        }
+        if(choice == 1){
+            cout << "Enter Employee ID: ";
+            cin >> id;
+        }
+        else
+            return;
+    }
     deleteEmployee(departments, department, id);
+    cout << "Delete employee successfully." << endl;
 }
 
 void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments) 
