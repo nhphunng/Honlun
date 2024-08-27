@@ -480,7 +480,7 @@ void handleDeleteDepartment(vector<Department> &departments)
     cout << "Enter the name of the department to delete: ";
     cin.ignore();
     getline(cin, name);
-    if(deleteDepartment(departments, name));
+    if(deleteDepartment(departments, name))
         cout << "Delete Successfully!\n";
 }
 //Hien thi tat ca phong ban 
