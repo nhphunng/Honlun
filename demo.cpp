@@ -178,7 +178,7 @@ bool addDepartment(vector<Department> &departments, const string& name)
 }
 
 void updateEmployee(AVLTreeNode *node, const string& newName) {
-    if (node = nullptr) {
+    if (node == nullptr) {
         return;
     }
     node->employee->department = newName;
