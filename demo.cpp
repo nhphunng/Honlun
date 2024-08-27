@@ -196,15 +196,13 @@ void editDepartment(vector<Department> &departments, const string& oldName, cons
     }
 }
 
-bool deleteDepartment(vector<Department> &departments, const string& name) 
+void deleteDepartment(vector<Department> &departments, const string& name) 
 {
     int index = findDepartmentIndex(departments, name);
     if (index != -1) {
         departments.erase(departments.begin() + index);
-        return true;
     } else {
         cout << "Department not found!" << endl;
-        return false;
     }
 }
 
@@ -480,8 +478,28 @@ void handleDeleteDepartment(vector<Department> &departments)
     cout << "Enter the name of the department to delete: ";
     cin.ignore();
     getline(cin, name);
-    if(deleteDepartment(departments, name))
-        cout << "Delete Successfully!\n";
+
+    while(findDepartmentIndex(departments, name) == -1)
+    {
+        int choice;
+        cout << "Department not found. Do you want to find again with another department [1/0]: ";
+        cin >> choice;
+        while(cin.fail() || (choice != 0 && choice != 1)){
+            cout << "Invalid selection. Please try again [1/0]: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> choice;
+        }
+        if(choice == 1){
+            cout << "Enter Department: ";
+            cin.ignore();
+            getline(cin, name);
+        }
+        else
+            return;    
+    }
+    deleteDepartment(departments, name);
+    cout << "Delete department successfully.";
 }
 //Hien thi tat ca phong ban 
 void handleDisplayAllDepartments(const vector<Department> &departments) 
@@ -643,21 +661,80 @@ void handleDeleteEmployee(vector<Department> &departments)
     cout << "Enter Department: ";
     cin.ignore();
     getline(cin, department);
-    
+
+    while(findDepartmentIndex(departments, department) == -1)
+    {
+        int choice;
+        cout << "Department not found. Do you want to find again with another department [1/0]: ";
+        cin >> choice;
+        while(cin.fail() || (choice != 0 && choice != 1)){
+            cout << "Invalid selection. Please try again [1/0]: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> choice;
+        }
+        if(choice == 1){
+            cout << "Enter Department: ";
+            cin.ignore();
+            getline(cin, department);
+        }
+        else
+            return;    
+    }
+    int index = findDepartmentIndex(departments, department);
+    Employee temp;
     cout << "Enter Employee ID: ";
     cin >> id;
-    
+    while (!searchID(departments[index].employeeTree.root, id, temp))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        int choice;
+        cout << "This ID does not exist. Do you want to find again with another ID [1/0]: ";
+        cin >> choice;
+        while(cin.fail() || (choice != 0 && choice != 1)){
+            cout << "Invalid selection. Please try again [1/0]: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> choice;
+        }
+        if(choice == 1){
+            cout << "Enter Employee ID: ";
+            cin >> id;
+        }
+        else
+            return;
+    }
     deleteEmployee(departments, department, id);
+    cout << "Delete employee successfully." << endl;
 }
 
 void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments) 
 {
     string department;
-    
+    cout << "=== Display Employees In Department ===\n";
     cout << "Enter Department: ";
     cin.ignore();
     getline(cin, department);
-    
+    while(findDepartmentIndex(departments, department) == -1)
+    {
+        int choice;
+        cout << "Department not found. Do you want to find again with another department [1/0]: ";
+        cin >> choice;
+        while(cin.fail() || (choice != 0 && choice != 1)){
+            cout << "Invalid selection. Please try again [1/0]: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> choice;
+        }
+        if(choice == 1){
+            cout << "Enter Department: ";
+            cin.ignore();
+            getline(cin, department);
+        }
+        else
+            return;    
+    }
     displayAllEmployeesInDepartment(departments, department);
 }
 
@@ -700,15 +777,22 @@ void handleFindEmployee(const vector<Department> &departments){
     if (!found){
         cout << "This ID does not exist! Do you want to find again with another ID? [1/0]: ";
         do {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> choice;
             if (choice == 1) {
                 clearScreen();
                 handleFindEmployee(departments);
                 break;
             }
-            else if (choice != 0){
-                cout << "Invalid choice. Please enter 1 or 0: ";
-            }
+            else if(cin.fail() || choice != 0)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid selection. Please try again.\n"; 
+                cout << "This ID does not exist! Do you want to find again with another ID? [1/0]: ";
+                cin >> choice;
+            }       
         } while (choice);
     }
 }
@@ -777,21 +861,23 @@ void handleEditEmployee(vector<Department> &departments)
 
 void Continue(int &choice)
 {
-        int cont;
+    int cont;
+    cout << "Continue [1/0]: ";
+    cin >> cont;
+    while (cin.fail() || (cont != 0 && cont != 1)){
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid selection. Please try again.\n";
         cout << "Continue [1/0]: ";
         cin >> cont;
-        while (cont != 0 && cont != 1){
-            cout << "Invalid selection. Please try again.\n";
-            cout << "Continue [1/0]: ";
-            cin >> cont;
-        }
-        if (cont == 0) {
-            cout << "Exiting the program.";
-            choice = 0;
-            return;
-        }
-        else 
-            clearScreen();
+    }
+    if (cont == 0) {
+        cout << "Exiting the program.";
+        choice = 0;
+        return;
+    }
+    else 
+        clearScreen();
 }
 
 int main() {
