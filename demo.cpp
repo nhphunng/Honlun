@@ -435,7 +435,7 @@ void handleAddDepartment(vector<Department> &departments)
     cin.ignore();
     getline(cin, name);
     if(addDepartment(departments, name))
-        cout << "Add Department Successfully!";
+        cout << "Add Department Successfully!\n";
 }
 //Sua phong ban
 void handleEditDepartment(vector<Department> &departments) 
