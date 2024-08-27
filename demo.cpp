@@ -163,35 +163,47 @@ void inOrder(AVLTreeNode* node) {
 }
 
 
-void addDepartment(vector<Department> &departments, const string& name) 
+bool addDepartment(vector<Department> &departments, const string& name) 
 {
     if (findDepartmentIndex(departments, name) != -1) {
         cout << "Department already exists!" << endl;
-        return;
+        return false;
     }
     Department dept;
     dept.name = name;
     createAVLTree(dept.employeeTree);
     departments.push_back(dept);
+    return true;
 }
 
+void updateEmployee(AVLTreeNode *node, const string& newName) {
+    if (node = nullptr) {
+        return;
+    }
+    node->employee->department = newName;
+    updateEmployee(node->left, newName);
+    updateEmployee(node->right, newName);
+}
 void editDepartment(vector<Department> &departments, const string& oldName, const string& newName) 
 {
     int index = findDepartmentIndex(departments, oldName);
     if (index != -1) {
         departments[index].name = newName;
-    } else {
-        cout << "Department not found!" << endl;
+        AVLTreeNode *employ = departments[index].employeeTree.root;
+        updateEmployee(employ, newName);
+        cout << "Edit Department Successfully!\n";
     }
 }
 
-void deleteDepartment(vector<Department> &departments, const string& name) 
+bool deleteDepartment(vector<Department> &departments, const string& name) 
 {
     int index = findDepartmentIndex(departments, name);
     if (index != -1) {
         departments.erase(departments.begin() + index);
+        return true;
     } else {
         cout << "Department not found!" << endl;
+        return false;
     }
 }
 
@@ -424,17 +436,40 @@ void handleAddDepartment(vector<Department> &departments)
     cout << "Enter the department name: ";
     cin.ignore();
     getline(cin, name);
-    addDepartment(departments, name);
-    cout << "Add Department Successfully!\n";
+    if(addDepartment(departments, name))
+        cout << "Add Department Successfully!";
 }
 //Sua phong ban
 void handleEditDepartment(vector<Department> &departments) 
 {
     cout << "=== Edit Department ===\n";
+    cout << "Departments:\n";
+    for(Department dept : departments) {
+        cout << dept.name << '\n';
+    }
     string oldName, newName;
-    cout << "Enter the current department name: ";
+    cout << "Enter the department name you want to edit: ";
     cin.ignore();
     getline(cin, oldName);
+    while(findDepartmentIndex(departments, oldName) == -1)
+    {
+        int choice;
+        cout << "Department not found. Do you want to find again with another department [1/0]: ";
+        cin >> choice;
+        while(cin.fail() || (choice != 0 && choice != 1)){
+            cout << "Invalid selection. Please try again [1/0]: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> choice;
+        }
+        if(choice == 1){
+            cout << "Enter Department: ";
+            cin.ignore();
+            getline(cin, oldName);
+        }
+        else
+            return;    
+    }
     cout << "Enter the new department name: ";
     getline(cin, newName);
     editDepartment(departments, oldName, newName);
@@ -447,8 +482,8 @@ void handleDeleteDepartment(vector<Department> &departments)
     cout << "Enter the name of the department to delete: ";
     cin.ignore();
     getline(cin, name);
-    deleteDepartment(departments, name);
-    cout << "Delete Successfully!\n";
+    if(deleteDepartment(departments, name));
+        cout << "Delete Successfully!\n";
 }
 //Hien thi tat ca phong ban 
 void handleDisplayAllDepartments(const vector<Department> &departments) 
