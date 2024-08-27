@@ -608,7 +608,7 @@ void DDepartment(vector<Department> departments, Employee *emp)
     if(findDepartmentIndex(departments, emp->department) != -1)
     {
        addEmployeeToDepartment(departments, emp->department, emp);
-       cout << "Employee Added Successfully!" << endl; 
+    //    cout << "Employee Added Successfully!" << endl; 
     }
     else 
     {
