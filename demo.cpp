@@ -718,6 +718,10 @@ void handleEditEmployee(vector<Department> &departments)
             else if (choice != 0){
                 cout << "Invalid choice. Please enter 1 or 0: ";
             }
+            else 
+            {
+                return; 
+            }
         } while (choice);
     }  
         Name(emp);
