@@ -9,6 +9,7 @@
 #include <iomanip>
 using namespace std;
 
+
 struct Employee 
 {
     long long id;
@@ -304,9 +305,6 @@ void displayAllEmployeesInDepartment(const vector<Department> &departments, cons
 {
     int index = findDepartmentIndex(departments, departmentName);
     if (index != -1) {
-        cout << left << setw(15) << "Department" << setw(10) << "ID"
-             << setw(25) << "Name" << setw(10) << "Salary" 
-             << setw(15) << "Phone" << endl;
         inOrder(departments[index].employeeTree.root);
     } else {
         cout << "Department not found!" << endl;
@@ -499,6 +497,108 @@ bool checkID(long long id)
     return false;
 }
 
+bool enterName(Employee *emp)
+{
+    cout << "Enter Employee Name: ";
+    cin.ignore();
+    getline(cin, emp->name);
+    if(!emp->name.empty())
+        return true; 
+    return false;
+}
+
+void Name(Employee *emp)
+{
+    bool checkName = enterName(emp);
+    if (checkName == false) 
+    {
+        cout << "Employee Name is empty!" << endl;
+        Name(emp);
+    }
+}
+
+bool enterSalary(Employee *emp)
+{
+    cout << "Enter Salary: ";
+    cin >> emp->salary;
+    if (cin.fail() || emp->salary < 0)
+    {
+        cin.clear(); 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Salary must be a positive number." << endl;
+        return false; 
+    }
+    return true; 
+}
+
+void Salary(Employee *emp)
+{
+    bool checkSalary = false;
+
+    // Keep prompting until a valid salary is entered
+    while (!checkSalary)
+    {
+        checkSalary = enterSalary(emp);
+    }
+}
+
+
+bool enterPhone(Employee *emp)
+{
+    cout << "Enter Phone Number: ";
+    cin.ignore();
+    getline(cin, emp->phone);
+    for(int i = 0; i < emp->phone.length(); i++)
+    {
+        if(emp->phone[i] < '0' || emp->phone[i] > '9')
+            return false;
+    }
+    if(emp->phone.empty())
+        return false;
+    return true; 
+}
+
+void Phone(Employee *emp)
+{
+    bool checkPhone = enterPhone(emp);
+    if(!checkPhone)
+    {
+        cout << "Phone must be numbers" << endl;
+        Phone(emp);
+    }
+}
+
+bool enterDepartment(Employee *emp)
+{
+    cout  << "Enter Department: ";
+    getline(cin, emp->department);
+    if (emp->department.empty()) 
+    {
+        return false; 
+    }
+    return true; 
+}
+
+void DDepartment(vector<Department> departments, Employee *emp)
+{
+    bool checkDepartment = enterDepartment(emp);
+    if(!checkDepartment)
+    {
+        cout << "Department is empty" << endl;
+        DDepartment(departments ,emp);
+    }
+    if(findDepartmentIndex(departments, emp->department) != -1)
+    {
+       addEmployeeToDepartment(departments, emp->department, emp);
+       cout << "Employee Added Successfully!" << endl; 
+    }
+    else 
+    {
+        cout << "Department not found" << endl; 
+        DDepartment(departments, emp);
+    }
+}
+
 void handleAddEmployee(vector<Department> &departments) 
 {
     cout << "=== Add Employee ===\n";
@@ -519,45 +619,10 @@ void handleAddEmployee(vector<Department> &departments)
             throw invalid_argument("ID is available!");
         }
 
-        cout << "Enter Employee Name: ";
-        cin.ignore();
-        getline(cin, emp->name);
-        if (emp->name.empty()) 
-        {
-            throw invalid_argument("Employee Name is empty!");
-        }
-
-        cout << "Enter Salary: ";
-        cin >> emp->salary;
-        if (cin.fail() || emp->salary < 0) 
-        {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            throw invalid_argument("Salary must be a positive real number!");
-        }
-
-        cout << "Enter Phone Number: ";
-        cin.ignore();
-        getline(cin, emp->phone);
-        if (emp->phone.empty()) 
-        {
-            throw invalid_argument("Phone number is empty!");
-        }
-
-        cout  << "Enter Department: ";
-        getline(cin, emp->department);
-        if (emp->department.empty()) 
-        {
-            throw invalid_argument("Department is empty!");
-        }
-
-        if(findDepartmentIndex(departments, emp->department) != -1)
-        {
-            addEmployeeToDepartment(departments, emp->department, emp);
-            cout << "Employee Added Successfully!" << endl; 
-        }
-        else
-            cout << "Department not found!";
+        Name(emp);
+        Salary(emp);
+        Phone(emp);    
+        DDepartment(departments, emp);
         
     }
     catch(const std::exception& e)
@@ -568,69 +633,32 @@ void handleAddEmployee(vector<Department> &departments)
     } 
 }
 
-//Sua thong tin nhan vien
-void handleEditEmployee(vector<Department> &departments) 
+
+void handleDeleteEmployee(vector<Department> &departments) 
 {
-    cout << "=== Edit Employee ===\n";
-     try
-    {
+    cout << "=== Delete Employee ===\n";
+    int id;
+    string department;
+    
+    cout << "Enter Department: ";
+    cin.ignore();
+    getline(cin, department);
+    
+    cout << "Enter Employee ID: ";
+    cin >> id;
+    
+    deleteEmployee(departments, department, id);
+}
 
-        int id;
-        string department, newName, newPhone;
-        double newSalary;
-        
-        cout << "Enter Department: ";
-        cin.ignore();
-        getline(cin, department);
-        if(department.empty())
-        {
-            throw invalid_argument("Department name is empty!");
-        }
-
-        cout << "Enter Employee ID: ";
-        cin >> id;
-        if (cin.fail()) 
-        {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Bo qua input sai 
-            throw invalid_argument("Employee ID must be an integer!");
-        }
-
-
-        cout << "Enter New Employee Name: ";
-        cin.ignore();
-        getline(cin, newName);
-        if (newName.empty()) 
-        {
-            throw invalid_argument("Employee Name is empty!");
-        }
-
-        cout << "Enter New Salary: ";
-        cin >> newSalary;
-        if (cin.fail() || newSalary < 0) 
-        {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            throw invalid_argument("Salary must be a positive real number!");
-        }
-
-        cout << "Enter Employee Phone Number: ";
-        cin.ignore();
-        getline(cin, newPhone);
-         if (newPhone.empty()) 
-        {
-            throw invalid_argument("Phone number is empty!");
-        }
-
-        editEmployeeInDepartment(departments, department, id, newName, newSalary, newPhone);
-        cout << "Employee Information Update Successfully" << endl;
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << "Error: " << e.what() << endl;
-        cout << "Please re-enter!" << endl;
-        handleEditEmployee(departments);
-    }
+void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments) 
+{
+    string department;
+    
+    cout << "Enter Department: ";
+    cin.ignore();
+    getline(cin, department);
+    
+    displayAllEmployeesInDepartment(departments, department);
 }
 
 bool searchID(AVLTreeNode* node, long long id, Employee &empl) {
@@ -645,74 +673,6 @@ bool searchID(AVLTreeNode* node, long long id, Employee &empl) {
         return searchID(node->left, id, empl);
     else
         return searchID(node->right, id, empl);
-}
-
-void handleDeleteEmployee(vector<Department> &departments) 
-{
-    cout << "=== Delete Employee ===\n";
-    int id;
-    string department;
-    
-    cout << "Enter Department: ";
-    cin.ignore();
-    getline(cin, department);
-
-    while(findDepartmentIndex(departments, department) == -1)
-    {
-        int choice;
-        cout << "Department not found. Do you want to find again with another department [1/0]: ";
-        cin >> choice;
-        while(cin.fail() || (choice != 0 && choice != 1)){
-            cout << "Invalid selection. Please try again [1/0]: ";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cin >> choice;
-        }
-        if(choice == 1){
-            cout << "Enter Department: ";
-            cin.ignore();
-            getline(cin, department);
-        }
-        else
-            return;    
-    }
-    int index = findDepartmentIndex(departments, department);
-    Employee temp;
-    cout << "Enter Employee ID: ";
-    cin >> id;
-    while (!searchID(departments[index].employeeTree.root, id, temp))
-    {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        int choice;
-        cout << "This ID does not exist. Do you want to find again with another ID [1/0]: ";
-        cin >> choice;
-        while(cin.fail() || (choice != 0 && choice != 1)){
-            cout << "Invalid selection. Please try again [1/0]: ";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cin >> choice;
-        }
-        if(choice == 1){
-            cout << "Enter Employee ID: ";
-            cin >> id;
-        }
-        else
-            return;
-    }
-    deleteEmployee(departments, department, id);
-    cout << "Delete employee successfully." << endl;
-}
-
-void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments) 
-{
-    string department;
-    
-    cout << "Enter Department: ";
-    cin.ignore();
-    getline(cin, department);
-    
-    displayAllEmployeesInDepartment(departments, department);
 }
 
 void handleFindEmployee(const vector<Department> &departments){
@@ -740,45 +700,98 @@ void handleFindEmployee(const vector<Department> &departments){
     if (!found){
         cout << "This ID does not exist! Do you want to find again with another ID? [1/0]: ";
         do {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> choice;
             if (choice == 1) {
                 clearScreen();
                 handleFindEmployee(departments);
                 break;
             }
-            else if(cin.fail() || choice != 0)
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Invalid selection. Please try again.\n"; 
-                cout << "This ID does not exist! Do you want to find again with another ID? [1/0]: ";
-                cin >> choice;
-            }       
+            else if (choice != 0){
+                cout << "Invalid choice. Please enter 1 or 0: ";
+            }
         } while (choice);
+    }
+}
+
+
+//Sua thong tin nhan vien
+void handleEditEmployee(vector<Department> &departments) 
+{
+    cout << "=== Edit Employee ===\n";
+    try
+    {
+        Employee* emp = new Employee;
+        int choice;
+        long long id;
+        cout << "Enter Employee ID: ";
+        cin >> id;
+        if (cin.fail()) 
+        {
+            cin.clear(); // Clear the error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard the invalid input
+            throw invalid_argument("Employee ID must be an integer!");
+        }
+        emp->id = id; 
+        Employee empl;
+        bool found = false;
+        for (const auto &dept : departments) 
+        {
+            if (searchID(dept.employeeTree.root, id, empl))
+            {
+                deleteEmployee(departments, empl.department, empl.id);
+                found = true; 
+                break; 
+            }
+        }
+        if (!found){
+        cout << "This ID does not exist! Do you want to find again with another ID? [1/0]: ";
+        do {
+            cin >> choice;
+            if (choice == 1) {
+                clearScreen();
+                handleFindEmployee(departments);
+                break;
+            }
+            else if (choice != 0){
+                cout << "Invalid choice. Please enter 1 or 0: ";
+            }
+            else 
+            {
+                return; 
+            }
+        } while (choice);
+    }  
+        Name(emp);
+        Salary(emp);
+        Phone(emp);    
+        DDepartment(departments, emp);
+        addEmployeeToDepartment(departments, emp->name, emp);
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+        cout << "Please re-enter!" << endl;
+        handleEditEmployee(departments);
     }
 }
 
 void Continue(int &choice)
 {
-    int cont;
-    cout << "Continue [1/0]: ";
-    cin >> cont;
-    while (cin.fail() || (cont != 0 && cont != 1)){
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Invalid selection. Please try again.\n";
+        int cont;
         cout << "Continue [1/0]: ";
         cin >> cont;
-    }
-    if (cont == 0) {
-        cout << "Exiting the program.";
-        choice = 0;
-        return;
-    }
-    else 
-        clearScreen();
+        while (cont != 0 && cont != 1){
+            cout << "Invalid selection. Please try again.\n";
+            cout << "Continue [1/0]: ";
+            cin >> cont;
+        }
+        if (cont == 0) {
+            cout << "Exiting the program.";
+            choice = 0;
+            return;
+        }
+        else 
+            clearScreen();
 }
 
 int main() {
@@ -793,52 +806,42 @@ int main() {
         switch (choice) {
             case 1:
                 handleAddDepartment(departments);
-                writeData(departments);
                 Continue(choice);
                 break;
             case 2:
                 handleEditDepartment(departments);
-                writeData(departments);
                 Continue(choice);
                 break;
             case 3:
                 handleDeleteDepartment(departments);
-                writeData(departments);
                 Continue(choice);
                 break;
             case 4:
                 handleDisplayAllDepartments(departments);
-                writeData(departments);
                 Continue(choice);
                 break;
             case 5:
                 handleAddEmployee(departments);
-                writeData(departments);
                 Continue(choice);
                 break;
             case 6:
                 handleEditEmployee(departments);
-                writeData(departments);
                 Continue(choice);
                 break;
             case 7:
                 handleDeleteEmployee(departments);
-                writeData(departments);
                 Continue(choice);
                 break;
             case 8:
                 handleDisplayAllEmployeesInDepartment(departments);
-                writeData(departments);
                 Continue(choice);
                 break;
             case 9:
                 handleFindEmployee(departments);
-                writeData(departments);
                 Continue(choice);
                 break;
             case 0:
                 cout << "Exiting the program." << endl;
-                writeData(departments);
                 break;
             default:
                 cout << "Invalid selection. Please try again." << endl;
@@ -847,6 +850,7 @@ int main() {
 
 
     } while (choice != 0);
+    writeData(departments);
     return 0;
 }
 
