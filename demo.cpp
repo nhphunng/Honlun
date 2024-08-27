@@ -775,24 +775,19 @@ void handleFindEmployee(const vector<Department> &departments){
     }
     if (!found){
         cout << "This ID does not exist! Do you want to find again with another ID? [1/0]: ";
-        do {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin >> choice;
+        while(cin.fail() || (choice != 0 && choice != 1)){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cin >> choice;
-            if (choice == 1) {
-                clearScreen();
-                handleFindEmployee(departments);
-                break;
-            }
-            else if(cin.fail() || choice != 0)
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Invalid selection. Please try again.\n"; 
-                cout << "This ID does not exist! Do you want to find again with another ID? [1/0]: ";
-                cin >> choice;
-            }       
-        } while (choice);
+            cout << "Invalid selection. Please try again [1/0]: "; 
+            cin >> choice;      
+        } 
+        if(choice == 1)
+            handleFindEmployee(departments);
+        else
+            return;
     }
 }
 
