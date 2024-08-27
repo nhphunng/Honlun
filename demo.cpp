@@ -651,6 +651,19 @@ void handleAddEmployee(vector<Department> &departments)
     } 
 }
 
+bool searchID(AVLTreeNode* node, long long id, Employee &empl) {
+    if (node == nullptr)
+        return false;
+
+    if (node->employee->id == id){
+        empl = *node->employee;
+        return true;    
+    }
+    else if (node->employee->id > id)
+        return searchID(node->left, id, empl);
+    else
+        return searchID(node->right, id, empl);
+}
 
 void handleDeleteEmployee(vector<Department> &departments) 
 {
@@ -736,20 +749,6 @@ void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments
             return;    
     }
     displayAllEmployeesInDepartment(departments, department);
-}
-
-bool searchID(AVLTreeNode* node, long long id, Employee &empl) {
-    if (node == nullptr)
-        return false;
-
-    if (node->employee->id == id){
-        empl = *node->employee;
-        return true;    
-    }
-    else if (node->employee->id > id)
-        return searchID(node->left, id, empl);
-    else
-        return searchID(node->right, id, empl);
 }
 
 void handleFindEmployee(const vector<Department> &departments){
