@@ -292,6 +292,9 @@ void displayAllEmployeesInDepartment(const vector<Department> &departments, cons
 {
     int index = findDepartmentIndex(departments, departmentName);
     if (index != -1) {
+        cout << left << setw(15) << "Department" << setw(10) << "ID"
+             << setw(25) << "Name" << setw(10) << "Salary" 
+             << setw(15) << "Phone" << endl;
         inOrder(departments[index].employeeTree.root);
     } else {
         cout << "Department not found!" << endl;
@@ -703,42 +706,52 @@ int main() {
         switch (choice) {
             case 1:
                 handleAddDepartment(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 2:
                 handleEditDepartment(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 3:
                 handleDeleteDepartment(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 4:
                 handleDisplayAllDepartments(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 5:
                 handleAddEmployee(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 6:
                 handleEditEmployee(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 7:
                 handleDeleteEmployee(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 8:
                 handleDisplayAllEmployeesInDepartment(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 9:
                 handleFindEmployee(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 0:
                 cout << "Exiting the program." << endl;
+                writeData(departments);
                 break;
             default:
                 cout << "Invalid selection. Please try again." << endl;
@@ -747,7 +760,6 @@ int main() {
 
 
     } while (choice != 0);
-    writeData(departments);
     return 0;
 }
 
