@@ -648,7 +648,9 @@ void handleAddEmployee(vector<Department> &departments)
         std::cerr << e.what() << '\n';
         cout << "Please re-enter!" << endl;
         handleAddEmployee(departments);
-    } 
+    }
+    cout << "Add Employee Successfully!";
+    return;
 }
 
 bool searchID(AVLTreeNode* node, long long id, Employee &empl) {
