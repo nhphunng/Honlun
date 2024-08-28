@@ -643,8 +643,8 @@ void handleAddEmployee(vector<Department> &departments)
         }
 
         Name(emp);
-        Salary(emp);
         Phone(emp);    
+        Salary(emp);
         DDepartment(departments, emp);
         
     }
@@ -782,7 +782,7 @@ void handleFindEmployee(const vector<Department> &departments){
         }
     }
     if (!found){
-        cout << "This ID does not exist!\nDo you want to find again with another ID? [1/0]: ";
+        cout << "This ID does not exist! Do you want to find again with another ID? [1/0]: ";
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cin >> choice;
@@ -824,6 +824,12 @@ void handleEditEmployee(vector<Department> &departments)
         {
             if (searchID(dept.employeeTree.root, id, empl))
             {
+                cout << "ID: " << empl.id << endl;
+                cout << "Name: " << empl.name << endl;
+                cout << "Phone: " << empl.phone << endl;
+                cout << "Salary: " << empl.salary << endl;
+                cout << "Department: " << empl.department << endl;
+                cout << "===========================\n"; 
                 deleteEmployee(departments, empl.department, empl.id);
                 found = true; 
                 break; 
@@ -846,9 +852,10 @@ void handleEditEmployee(vector<Department> &departments)
             else
                 return;
         }   
+        
         Name(emp);
-        Salary(emp);
         Phone(emp);    
+        Salary(emp);
         DDepartment(departments, emp);
         addEmployeeToDepartment(departments, emp->name, emp);
         cout << "Employee edited successfully!\n";
@@ -950,6 +957,5 @@ int main() {
     } while (choice != 0);
     return 0;
 }
-
 
 
