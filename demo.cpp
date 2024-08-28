@@ -48,8 +48,8 @@ AVLTreeNode* createNode(Employee* emp)
     return node;
 }
 
-void clearScreen(){
-    cout << "\033[2J\033[1;1H";
+void clearScreen() {
+    cout << "\033[2J\033[3J\033[1;1H";
 }
 
 vector<long long> ID;
@@ -879,8 +879,7 @@ void Continue(int &choice)
         choice = 0;
         return;
     }
-    else 
-        clearScreen();
+    clearScreen();
 }
 
 int main() {
