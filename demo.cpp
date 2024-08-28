@@ -782,7 +782,7 @@ void handleFindEmployee(const vector<Department> &departments){
         }
     }
     if (!found){
-        cout << "This ID does not exist! Do you want to find again with another ID? [1/0]: ";
+        cout << "This ID does not exist!\nDo you want to find again with another ID? [1/0]: ";
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cin >> choice;
