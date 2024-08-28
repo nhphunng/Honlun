@@ -645,6 +645,7 @@ void handleAddEmployee(vector<Department> &departments)
         Name(emp);
         Phone(emp);    
         Salary(emp);
+        cin.ignore();
         DDepartment(departments, emp);
         
     }
@@ -856,6 +857,7 @@ void handleEditEmployee(vector<Department> &departments)
         Name(emp);
         Phone(emp);    
         Salary(emp);
+        cin.ignore();
         DDepartment(departments, emp);
         addEmployeeToDepartment(departments, emp->name, emp);
         cout << "Employee edited successfully!\n";
