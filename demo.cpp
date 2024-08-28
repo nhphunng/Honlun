@@ -192,7 +192,6 @@ void editDepartment(vector<Department> &departments, const string& oldName, cons
         departments[index].name = newName;
         AVLTreeNode *employ = departments[index].employeeTree.root;
         updateEmployee(employ, newName);
-        cout << "Edit Department Successfully!\n";
     }
 }
 
@@ -335,12 +334,14 @@ void editEmployeeInDepartment(vector<Department> &departments, const string& dep
         if (empNode != nullptr) {
             editEmployee(empNode->employee, newName, newSalary, newPhone);
             cout << "Employee information updated successfully!" << endl;
+            return;
         } else {
             cout << "Employee not found!" << endl;
         }
     } else {
         cout << "Department not found!" << endl;
     }
+
 }
 
 
@@ -434,6 +435,7 @@ void handleAddDepartment(vector<Department> &departments)
     getline(cin, name);
     if(addDepartment(departments, name))
         cout << "Add Department Successfully!\n";
+    return;
 }
 //Sua phong ban
 void handleEditDepartment(vector<Department> &departments) 
@@ -469,6 +471,8 @@ void handleEditDepartment(vector<Department> &departments)
     cout << "Enter the new department name: ";
     getline(cin, newName);
     editDepartment(departments, oldName, newName);
+    cout << "Edit Department Successfully!\n";
+    return;
 }
 //Xoa phong ban
 void handleDeleteDepartment(vector<Department> &departments) 
@@ -499,7 +503,8 @@ void handleDeleteDepartment(vector<Department> &departments)
             return;    
     }
     deleteDepartment(departments, name);
-    cout << "Delete department successfully.";
+    cout << "Delete department successfully.\n";
+    return;
 }
 //Hien thi tat ca phong ban 
 void handleDisplayAllDepartments(const vector<Department> &departments) 
@@ -649,7 +654,7 @@ void handleAddEmployee(vector<Department> &departments)
         cout << "Please re-enter!" << endl;
         handleAddEmployee(departments);
     }
-    cout << "Add Employee Successfully!";
+    cout << "Add Employee Successfully!\n";
     return;
 }
 
@@ -722,6 +727,7 @@ void handleDeleteEmployee(vector<Department> &departments)
     }
     deleteEmployee(departments, department, id);
     cout << "Delete employee successfully." << endl;
+    return;
 }
 
 void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments) 
