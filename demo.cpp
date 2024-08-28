@@ -884,6 +884,7 @@ void Continue(int &choice)
 }
 
 int main() {
+    clearScreen();
     vector<Department> departments;
     readData(departments);
     int choice;
