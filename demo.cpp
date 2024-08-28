@@ -843,6 +843,8 @@ void handleEditEmployee(vector<Department> &departments)
         Phone(emp);    
         DDepartment(departments, emp);
         addEmployeeToDepartment(departments, emp->name, emp);
+        cout << "Employee edited successfully!\n";
+        return;
     }
     catch (const invalid_argument &e)
     {
@@ -885,38 +887,47 @@ int main() {
         switch (choice) {
             case 1:
                 handleAddDepartment(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 2:
                 handleEditDepartment(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 3:
                 handleDeleteDepartment(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 4:
                 handleDisplayAllDepartments(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 5:
                 handleAddEmployee(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 6:
                 handleEditEmployee(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 7:
                 handleDeleteEmployee(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 8:
                 handleDisplayAllEmployeesInDepartment(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 9:
                 handleFindEmployee(departments);
+                writeData(departments);
                 Continue(choice);
                 break;
             case 0:
@@ -929,7 +940,6 @@ int main() {
 
 
     } while (choice != 0);
-    writeData(departments);
     return 0;
 }
 
