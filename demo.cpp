@@ -744,7 +744,7 @@ void handleDisplayAllEmployeesInDepartment(const vector<Department> &departments
     while(findDepartmentIndex(departments, department) == -1)
     {
         int choice;
-        cout << "Department not found. Do you want to find again with another department [1/0]: ";
+        cout << "Department not found.\nDo you want to find again with another department [1/0]: ";
         cin >> choice;
         while(cin.fail() || (choice != 0 && choice != 1)){
             cout << "Invalid selection. Please try again [1/0]: ";
