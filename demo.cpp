@@ -302,6 +302,9 @@ void displayAllEmployeesInDepartment(const vector<Department> &departments, cons
 {
     int index = findDepartmentIndex(departments, departmentName);
     if (index != -1) {
+        cout << left << setw(15) << "Department" << setw(10) << "ID" 
+             << setw(25) << "Name" << setw(10) << "Salary"
+             << setw(15) << "Phone" << endl;
         inOrder(departments[index].employeeTree.root);
     } else {
         cout << "Department not found!" << endl;
